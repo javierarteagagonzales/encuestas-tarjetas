@@ -184,31 +184,81 @@ const questions = [
 ];
 
 let currentQuestionIndex = 0;
+let selectedOptions = []; // Array para almacenar el orden de las opciones seleccionadas
 
 function createQuestionCard(question, options, index) {
+    // Obtener el orden actual de las opciones seleccionadas para esta pregunta
+    let order = selectedOptions[index - 1] || Array.from({ length: options.length }, (_, i) => i);
+
     return `
-        <div class="card">
+        <div class="card" id="question-${index}">
             <p>${question}</p>
             <ul id="sortable${index}" class="sortable">
-                ${options.map((option, i) => `<li data-id="${i+1}">${option}</li>`).join('')}
+                ${order.map(i => `<li data-id="${i}">${options[i]}</li>`).join('')}
             </ul>
         </div>
     `;
 }
 
-function loadQuestion(index) {
-    const question = questions[index];
-    const container = document.getElementById('question-container');
-    container.innerHTML = createQuestionCard(question.question, question.options, index + 1);
+function loadQuestions() {
+    const container = document.getElementById('questions-container');
+    questions.forEach((q, index) => {
+        // Añadir el orden de las opciones seleccionadas para esta pregunta (si existe)
+        selectedOptions[index] = Array.from({ length: q.options.length }, (_, i) => i);
+        container.innerHTML += createQuestionCard(q.question, q.options, index + 1);
+    });
 
-    // Mostrar o ocultar botones de siguiente y anterior según la pregunta actual
-    if (index === 0) {
+    // Ocultar todas las preguntas menos la primera
+    $('.card').hide();
+    $('#question-1').show();
+
+    // Hacer sortable las listas de opciones con jQuery UI
+    $(".sortable").sortable();
+    $(".sortable").disableSelection();
+}
+
+function nextQuestion() {
+    // Guardar el orden actual de las opciones seleccionadas antes de avanzar
+    saveSelectedOptions();
+
+    // Ocultar pregunta actual
+    $(`#question-${currentQuestionIndex + 1}`).hide();
+
+    currentQuestionIndex++;
+    if (currentQuestionIndex < questions.length) {
+        // Mostrar siguiente pregunta
+        $(`#question-${currentQuestionIndex + 1}`).show();
+
+        // Mostrar u ocultar botones de siguiente y anterior según la pregunta actual
+        updateButtonVisibility();
+    }
+}
+
+function previousQuestion() {
+    // Guardar el orden actual de las opciones seleccionadas antes de retroceder
+    saveSelectedOptions();
+
+    // Ocultar pregunta actual
+    $(`#question-${currentQuestionIndex + 1}`).hide();
+
+    if (currentQuestionIndex > 0) {
+        currentQuestionIndex--;
+        // Mostrar pregunta anterior
+        $(`#question-${currentQuestionIndex + 1}`).show();
+
+        // Mostrar u ocultar botones de siguiente y anterior según la pregunta actual
+        updateButtonVisibility();
+    }
+}
+
+function updateButtonVisibility() {
+    if (currentQuestionIndex === 0) {
         document.getElementById('previous-btn').style.display = 'none';
     } else {
         document.getElementById('previous-btn').style.display = 'block';
     }
 
-    if (index === questions.length - 1) {
+    if (currentQuestionIndex === questions.length - 1) {
         document.getElementById('next-btn').style.display = 'none';
         document.getElementById('submit-btn').style.display = 'block';
     } else {
@@ -217,40 +267,28 @@ function loadQuestion(index) {
     }
 }
 
-
-function nextQuestion() {
-    currentQuestionIndex++;
-    if (currentQuestionIndex < questions.length) {
-        loadQuestion(currentQuestionIndex);
-    }
+function saveSelectedOptions() {
+    // Guardar el orden actual de las opciones seleccionadas en el array
+    let order = [];
+    $(`#sortable${currentQuestionIndex + 1} li`).each(function() {
+        order.push($(this).data('id'));
+    });
+    selectedOptions[currentQuestionIndex] = order;
 }
 
 function submitSurvey() {
-    let results = [];
-    questions.forEach((_, index) => {
-        let order = [];
-        $(`#sortable${index + 1} li`).each(function() {
-            order.push($(this).data('id'));
-        });
-        results.push(order);
-    });
-    alert('Tus respuestas son: ' + JSON.stringify(results));
+    // Guardar el orden final de las opciones seleccionadas antes de enviar la encuesta
+    saveSelectedOptions();
+
     // Aquí puedes enviar las respuestas al servidor utilizando AJAX
+    // const results = selectedOptions.map(order => order.map(i => questions[i - 1].options[i - 1]));
     // $.post('server-url', { results: results }, function(response) {
     //     console.log(response);
     // });
+
+    // Alerta para mostrar las respuestas seleccionadas
+    let results = selectedOptions.map(order => order.map(i => questions[i - 1].options[i]));
+    alert('Tus respuestas son: ' + JSON.stringify(results));
 }
 
-document.addEventListener('DOMContentLoaded', function() {
-    loadQuestion(currentQuestionIndex);
-});
-
-
-function previousQuestion() {
-    if (currentQuestionIndex > 0) {
-        currentQuestionIndex--;
-        loadQuestion(currentQuestionIndex);
-        document.getElementById('next-btn').style.display = 'block';
-        document.getElementById('submit-btn').style.display = 'none';
-    }
-}
+document.addEventListener('DOMContentLoaded', loadQuestions);
