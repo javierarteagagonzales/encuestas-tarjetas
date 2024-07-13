@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Prioridades</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Encuesta de Prioridades</h1>
+        <div id="question-container"></div>
+        <button id="previous-btn" onclick="previousQuestion()" style="display:none;">Anterior</button>
+        <button id="next-btn" onclick="nextQuestion()">Siguiente</button>
+        <button id="submit-btn" onclick="submitSurvey()" style="display:none;">Enviar</button>
+    </div>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
