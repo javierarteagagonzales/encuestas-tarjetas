@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Prioridades</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+        .container {
+            width: 100%;
+            max-width: 800px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+        .container h1 {
+            margin-bottom: 20px;
+        }
+        .sortable {
+            list-style-type: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        .sortable li {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #e0e0e0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: move;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Encuesta de Prioridades</h1>
+        
+        <div>
+            <p>1. Si usted tuviera la habilidad y condiciones adecuadas, a que se dedicaría:</p>
+            <ul id="sortable1" class="sortable">
+                <li data-id="1">A) A modificar todos los jardines de la ciudad.</li>
+                <li data-id="2">B) A obtener logros por medio de la política.</li>
+                <li data-id="3">C) A prestar dinero a altos intereses.</li>
+                <li data-id="4">D) A cumplir con las obligaciones que su religión le impone.</li>
+            </ul>
+        </div>
+        
+        <div>
+            <p>2. Cuando ve un accidente usted:</p>
+            <ul id="sortable2" class="sortable">
+                <li data-id="1">A) Se pone a orar con la persona accidentada.</li>
+                <li data-id="2">B) Pide una ambulancia.</li>
+                <li data-id="3">C) Cuida las pertenencias del accidentado.</li>
+                <li data-id="4">D) Trata de detener al culpable.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>3. Es usted un maestro de primaria y uno de sus alumnos le ofrece un costoso obsequio con el fin de obtener una mayor calificación usted:</p>
+            <ul id="sortable3" class="sortable">
+                <li data-id="1">A) Le dedicaría tiempo extra para nivelarlo.</li>
+                <li data-id="2">B) Lo rechazaría amablemente y lo invitaría a estudiar.</li>
+                <li data-id="3">C) Aceptaría el presente y le daría la calificación deseada por su alumno, porque usted sabe que es inteligente.</li>
+                <li data-id="4">D) Llamaría a sus padres para que paguen clases particulares.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>4. Al conducir su automóvil por descuido usted se pasa un alto, el agente de tránsito lo detiene y para permitirle circular nuevamente, le solicita cierta suma de dinero usted:</p>
+            <ul id="sortable4" class="sortable">
+                <li data-id="1">A) Arranca su automóvil y deja al agente de transito.</li>
+                <li data-id="2">B) Trata de llegar a un acuerdo encaminado a disminuir la cantidad de dinero.</li>
+                <li data-id="3">C) Pide le sea levantada la infracción pertinente.</li>
+                <li data-id="4">D) Amenaza al agente con reportarlo con sus superiores.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>5. Prefiere una amistad que:</p>
+            <ul id="sortable5" class="sortable">
+                <li data-id="1">A) Sea activo y le guste reparar defectos en su hogar.</li>
+                <li data-id="2">B) Se interese por ser líder en el sindicato del cual forma parte.</li>
+                <li data-id="3">C) Asistir con frecuencia a eventos religiosos.</li>
+                <li data-id="4">D) Le interesa emprender negocios.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>6. Si al llegar a su trabajo encuentra en el baño un reloj en el lavabo usted:</p>
+            <ul id="sortable6" class="sortable">
+                <li data-id="1">A) Trataría de encontrar a su dueño.</li>
+                <li data-id="2">B) Lo reporta a sus superiores y lo entrega.</li>
+                <li data-id="3">C) No hace ningún comentario y espera a que lo busquen.</li>
+                <li data-id="4">D) Lo deja donde lo encontró.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>7. Un buen gobierno debería:</p>
+            <ul id="sortable7" class="sortable">
+                <li data-id="1">A) Ayudar a las clases necesitadas.</li>
+                <li data-id="2">B) Ampliar las zonas turísticas de cinco estrellas.</li>
+                <li data-id="3">C) Buscar a los mejores líderes de su partido.</li>
+                <li data-id="4">D) Permitir que la religión sea oficial.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>8. Un amigo suyo desea obtener un ascenso dentro de su trabajo, usted le aconseja:</p>
+            <ul id="sortable8" class="sortable">
+                <li data-id="1">A) Que sea cumplido y eficiente.</li>
+                <li data-id="2">B) Que busque cuales son los errores del jefe para que demuestre que él no es perfecto.</li>
+                <li data-id="3">C) Que prometa una manda a su santo de preferencia.</li>
+                <li data-id="4">D) Que ofrezca una excelente comida a los dirigentes de la empresa.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>9. Si Luis al llegar a su casa observa que le están robando las llantas al automóvil de su vecino:</p>
+            <ul id="sortable9" class="sortable">
+                <li data-id="1">A) Llamaría a la policía.</li>
+                <li data-id="2">B) Llamaría a su vecino.</li>
+                <li data-id="3">C) Pediría a los asaltantes parte del beneficio que obtendrán en el robo, por guardar silencio.</li>
+                <li data-id="4">D) Mejor no haría nada y se metería a su casa.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>10. Un empleado de 60 años que ha sido leal a la empresa durante 28 años, se queja del exceso de trabajo, lo mejor sería:</p>
+            <ul id="sortable10" class="sortable">
+                <li data-id="1">A) Pedir un aumento de sueldo.</li>
+                <li data-id="2">B) Recurrir al sindicato para que éste le ayude.</li>
+                <li data-id="3">C) Que recurra a su guía espiritual para que le diga como se le debe ayudar y su trabajo no se le haga pesado.</li>
+                <li data-id="4">D) Que solicite una persona para que le ayude.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>11. Usted visita a un amigo enfermo y lo mejor sería:</p>
+            <ul id="sortable11" class="sortable">
+                <li data-id="1">A) Que lo convenza de acudir al seguro social para que su atención médica no le sea costosa.</li>
+                <li data-id="2">B) Proponerle su ayuda cuando él tenga que acudir a sus citas médicas.</li>
+                <li data-id="3">C) Que como todo le ha salido mal últimamente vea a una persona para que le realice una limpia.</li>
+                <li data-id="4">D) Decirle lo importante que fueron las juntas de vecinos ahora que él estuvo hospitalizado.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>12. Al salir de viaje sus vecinos le piden cuidar su casa, durante su ausencia usted:</p>
+            <ul id="sortable12" class="sortable">
+                <li data-id="1">A) Les dice que no debido a que se encuentra muy ocupado en esos días.</li>
+                <li data-id="2">B) Atiende con gusto la petición de sus vecinos.</li>
+                <li data-id="3">C) A cambio de sus servicios les solicita prestado el automóvil que no utilizarán en su viaje.</li>
+                <li data-id="4">D) Asiste al módulo de vigilancia local, para que le brinde mayor seguridad.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>13. Si encuentra a un niño llorando solo en una tienda comercial usted:</p>
+            <ul id="sortable13" class="sortable">
+                <li data-id="1">A) Lo ayudaría a buscar a su familia en la tienda.</li>
+                <li data-id="2">B) Lo llevaría al área de servicios generales para que ahí espere a que lo ayuden.</li>
+                <li data-id="3">C) Pasaría de largo porque usted tiene prisa.</li>
+                <li data-id="4">D) Lo llevaría a su casa pero le cobra a la mamá por el tiempo que usted perdió por andarla buscando.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>14. Si usted viviera en provincia y tuviera más entradas de las que necesita, ¿qué preferiría hacer con el dinero?</p>
+            <ul id="sortable14" class="sortable">
+                <li data-id="1">A) Hacerlo producir para ayudar al desarrollo de la industria.</li>
+                <li data-id="2">B) Donar el dinero para la construcción de una iglesia.</li>
+                <li data-id="3">C) Darlo a una sociedad para el beneficio de las familias humildes del poblado.</li>
+                <li data-id="4">D) Apoyar ayuda al partido político con el cual simpatiza.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>15. Su hijo ha dejado sus estudios por un tiempo:</p>
+            <ul id="sortable15" class="sortable">
+                <li data-id="1">A) Le sugiere que vea a los maestros para que les proponga que lo ayuden.</li>
+                <li data-id="2">B) Que haga lo que quiera pues ya está grande.</li>
+                <li data-id="3">C) Que curse nuevamente el año para que pase las materias reprobadas.</li>
+                <li data-id="4">D) Darle apoyo económico y moral para que supere este tropiezo en sus estudios.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>16. ¿A qué actividad prefiere dedicarse durante sus vacaciones?</p>
+            <ul id="sortable16" class="sortable">
+                <li data-id="1">A) Obtener experiencia en otro negocio que no sea el propio.</li>
+                <li data-id="2">B) Participar en la campaña política de diputados que se va a efectuar en su localidad.</li>
+                <li data-id="3">C) Asistir a un retiro organizado por la iglesia.</li>
+                <li data-id="4">D) Visitar un lugar que no conoce, en compañía de su familia.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>17. La familia de Pedro tiene un hijo drogadicto y es amigo de su hijo desde pequeño, al saberlo usted:</p>
+            <ul id="sortable17" class="sortable">
+                <li data-id="1">A) Le pide a su hijo que no lo vuelva a ver.</li>
+                <li data-id="2">B) Le sugiere a su familia que lo lleven a Centros de Integración Juvenil para que lo ayuden.</li>
+                <li data-id="3">C) Si el muchacho ya es drogadicto le pide le obsequie un reloj que tanto le gusta a su hijo para no decírselo a sus padres.</li>
+                <li data-id="4">D) Lo lleva a un centro de rehabilitación junto con su hijo para que sienta que lo apoya y no es rechazado.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>18. Su esposa le comenta que al terminar de realizar sus actividades cotidianas le queda mucho tiempo libre, usted le sugiere:</p>
+            <ul id="sortable18" class="sortable">
+                <li data-id="1">A) Que emplee su tiempo como catequista de la iglesia.</li>
+                <li data-id="2">B) Que venda artículos femeninos.</li>
+                <li data-id="3">C) Que promueva juntas entre los vecinos encaminadas a resolver los problemas de la comunidad.</li>
+                <li data-id="4">D) Que asista con sus hijos a centros recreativos si fuera posible.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>19. Quiere pedir un favor a un conocido, que beneficiará a la empresa para la cual trabaja:</p>
+            <ul id="sortable19" class="sortable">
+                <li data-id="1">A) Le explica los motivos y necesidades por las cuales requiere ese favor.</li>
+                <li data-id="2">B) Le pide el favor sin mayor explicación.</li>
+                <li data-id="3">C) Le hace creer que él será el más beneficiado al ofrecerle una retribución.</li>
+                <li data-id="4">D) Le sugiere a su jefe que sea él quien se lo pida y explique la necesidad.</li>
+            </ul>
+        </div>
+
+        <div>
+            <p>20. ¿Cuál de las siguientes ocupaciones escogería?</p>
+            <ul id="sortable20" class="sortable">
+                <li data-id="1">A) Trabajar en forma independiente.</li>
+                <li data-id="2">B) Como encargado del departamento en el cual a usted le gusta.</li>
+                <li data-id="3">C) Dedicarse a estudios de la iglesia.</li>
+                <li data-id="4">D) Trabajador social.</li>
+            </ul>
+        </div>
+
+        <button onclick="submitSurvey()">Enviar</button>
+    </div>
+    <script>
+        $(function() {
+            $(".sortable").sortable();
+            $(".sortable").disableSelection();
+        });
+
+        function submitSurvey() {
+            var results = {};
+            for (var i = 1; i <= 20; i++) {
+                var order = [];
+                $('#sortable' + i + ' li').each(function() {
+                    order.push($(this).data('id'));
+                });
+                results['question' + i] = order;
+            }
+            alert(JSON.stringify(results, null, 2));
+            // Aquí puedes enviar el orden a tu servidor utilizando AJAX
+            // $.post('server-url', results, function(response) {
+            //     console.log(response);
+            // });
+        }
+    </script>
+</body>
+</html>
