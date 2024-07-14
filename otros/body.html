@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Encuesta de Prioridades</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .container {
+            width: 100%;
+            max-width: 600px;
+            background: #fff;
+            padding: 20px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            text-align: center;
+        }
+        .container h1 {
+            margin-bottom: 20px;
+        }
+        .sortable {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+        .sortable li {
+            padding: 10px;
+            margin: 5px 0;
+            background-color: #e0e0e0;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            cursor: move;
+        }
+        button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            font-size: 16px;
+            color: #fff;
+            background-color: #007bff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Encuesta de Prioridades</h1>
+        <p>1. Si usted tuviera la habilidad y condiciones adecuadas, ¿a qué se dedicaría?</p>
+        <ul id="sortable1" class="sortable">
+            <li data-id="1">A) A modificar todos los jardines de la ciudad.</li>
+            <li data-id="2">B) A obtener logros por medio de la política.</li>
+            <li data-id="3">C) A prestar dinero a altos intereses.</li>
+            <li data-id="4">D) A cumplir con las obligaciones que su religión le impone.</li>
+        </ul>
+        <button onclick="submitSurvey()">Enviar</button>
+    </div>
+    <script>
+        $(function() {
+            $(".sortable").sortable();
+            $(".sortable").disableSelection();
+        });
+
+        function submitSurvey() {
+            var order1 = [];
+            $('#sortable1 li').each(function() {
+                order1.push($(this).data('id'));
+            });
+            alert('Tu orden para la pregunta 1 es: ' + order1.join(', '));
+            // Aquí puedes enviar el orden a tu servidor utilizando AJAX
+            // $.post('server-url', { order1: order1 }, function(response) {
+            //     console.log(response);
+            // });
+        }
+    </script>
+</body>
+</html>
